@@ -6,6 +6,10 @@
 	ProfileManager manager = new ProfileManager(context);
 %>
 <h1>index</h1>
+
+<a href="oidc/index.jsp">Protected url by Auth0 OpenID Connect: oidc/index.jsp</a> (user@tenant1.com/password)<br />
+
+
 <a href="facebook/index.jsp">Protected url by Facebook: facebook/index.jsp</a> (use a real account)<br />
 <a href="facebook/notprotected.jsp">Not protected page: facebook/notprotected.jsp</a> (no authentication required)<br />
 <a href="facebookadmin/index.jsp">Protected url by Facebook with ROLE_ADMIN: facebookadmin/index.jsp</a> (use a real account)<br />
@@ -15,7 +19,6 @@
 <a href="basicauth/index.jsp">Protected url by indirect basic auth: basicauth/index.jsp</a> (use login = pwd)<br />
 <a href="cas/index.jsp">Protected url by CAS: cas/index.jsp</a> (use login = pwd)<br />
 <a href="saml2/index.jsp">Protected url by SAML2: saml2/index.jsp</a> (use testpac4j at gmail.com / Pac4jtest)<br />
-<a href="oidc/index.jsp">Protected url by Google OpenID Connect: oidc/index.jsp</a> (use a real account)<br />
 <a href="strava/index.jsp">Protected url by Strava: strava/index.jsp</a> (use a real account)<br />
 <a href="protected/index.jsp">Protected url: protected/index.jsp</a> (won't start any login process)<br />
 <br />

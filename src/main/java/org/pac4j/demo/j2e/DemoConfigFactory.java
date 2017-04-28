@@ -1,5 +1,6 @@
 package org.pac4j.demo.j2e;
 
+import com.nimbusds.jose.JWSAlgorithm;
 import org.pac4j.cas.client.CasClient;
 import org.pac4j.cas.client.CasProxyReceptor;
 import org.pac4j.cas.config.CasConfiguration;
@@ -36,18 +37,22 @@ public class DemoConfigFactory implements ConfigFactory {
     @Override
     public Config build() {
         final OidcConfiguration oidcConfiguration = new OidcConfiguration();
-        oidcConfiguration.setClientId("167480702619-8e1lo80dnu8bpk3k0lvvj27noin97vu9.apps.googleusercontent.com");
-        oidcConfiguration.setSecret("MhMme_Ik6IH2JMnAT6MFIfee");
+        oidcConfiguration.setClientId("tOpidb6ld72lD0JnpmU0sKxK7AE0QdDm");
+        oidcConfiguration.setSecret("EHmyc88uwnaz_Y6NSqYET7aiXz8k6x9iZS_rxjeJj6TmsIyu-xnJ3k8hkstU36uF");
         oidcConfiguration.setUseNonce(true);
-        //oidcClient.setPreferredJwsAlgorithm(JWSAlgorithm.RS256);
-        oidcConfiguration.addCustomParam("prompt", "consent");
-        final GoogleOidcClient oidcClient = new GoogleOidcClient(oidcConfiguration);
-        oidcClient.setAuthorizationGenerator((ctx, profile) -> { profile.addRole("ROLE_ADMIN"); return profile; });
-
+//        oidcConfiguration.addCustomParam("prompt", "consent");
+        oidcConfiguration.setPreferredJwsAlgorithm(JWSAlgorithm.RS256);
+//        oidcConfiguration.setClientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST);
+        oidcConfiguration.defaultDiscoveryURI("https://tenant1-cloud.eu.auth0.com/.well-known/openid-configuration");
+        final Auth0OIDCClient oidcClient = new Auth0OIDCClient(oidcConfiguration);
+        oidcClient.setAuthorizationGenerator((ctx, profile) -> {
+            profile.addRole("ROLE_ADMIN");
+            return profile;
+        });
         final SAML2ClientConfiguration cfg = new SAML2ClientConfiguration("resource:samlKeystore.jks",
-                                                "pac4j-demo-passwd",
-                                                "pac4j-demo-passwd",
-                                                "resource:testshib-providers.xml");
+                "pac4j-demo-passwd",
+                "pac4j-demo-passwd",
+                "resource:testshib-providers.xml");
         cfg.setMaximumAuthenticationLifetime(3600);
         cfg.setServiceProviderEntityId("http://localhost:8080/callback?client_name=SAML2Client");
         cfg.setServiceProviderMetadataPath(new File("sp-metadata.xml").getAbsolutePath());
